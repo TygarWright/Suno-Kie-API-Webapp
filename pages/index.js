@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
 import APIKeyModal from '../components/APIKeyModal';
 import MusicGenerator from '../components/MusicGenerator';
 import LyricsGenerator from '../components/LyricsGenerator';
@@ -57,7 +56,6 @@ export default function Home() {
         <h1 className="title">Suno.ai Music Web App</h1>
         <button onClick={() => setShowModal(true)} className="btn-key">Set API Key</button>
       </header>
-
       <nav className="tabs">
         {tabs.map(tab => (
           <button
@@ -69,11 +67,9 @@ export default function Home() {
           </button>
         ))}
       </nav>
-
       <main>
-        {apiKey ? (renderTabContent()) : (<p>Please set your API key to get started.</p>)}
+        {apiKey ? (renderTabContent()) : (<p className="fallback">Please set your API key to get started.</p>)}
       </main>
-
       {showModal && <APIKeyModal onSave={handleSaveKey} onClose={() => setShowModal(false)} />}
 
       <style jsx>{`
@@ -81,11 +77,10 @@ export default function Home() {
           padding: 2rem;
           max-width: 900px;
           margin: 0 auto;
-          background: rgba(255, 255, 255, 0.15);
-          backdrop-filter: blur(15px);
+          background: #222;
           border-radius: 16px;
           box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-          color: #ffffff;
+          color: #fff;
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
           text-align: center;
           min-height: 100vh;
@@ -104,16 +99,16 @@ export default function Home() {
           font-weight: 700;
         }
         .btn-key {
-          background: rgba(255, 255, 255, 0.3);
+          background: #444;
           border: none;
-          color: #ffffff;
+          color: #fff;
           padding: 0.5rem 1rem;
           border-radius: 8px;
           cursor: pointer;
           transition: background 0.3s ease;
         }
         .btn-key:hover {
-          background: rgba(255, 255, 255, 0.5);
+          background: #666;
         }
         .tabs {
           display: flex;
@@ -125,7 +120,7 @@ export default function Home() {
         .tab-btn {
           padding: 0.5rem 1rem;
           border-radius: 8px;
-          background: rgba(255, 255, 255, 0.15);
+          background: #333;
           border: none;
           color: #fff;
           cursor: pointer;
@@ -133,16 +128,29 @@ export default function Home() {
           transition: background 0.3s ease;
         }
         .tab-btn.active, .tab-btn:hover {
-          background: rgba(255, 255, 255, 0.4);
+          background: #555;
         }
         main {
           flex-grow: 1;
           padding-bottom: 4rem;
         }
-        p {
+        .fallback {
           font-size: 1.2rem;
           margin-top: 3rem;
           font-weight: 500;
+        }
+        @media (max-width: 600px) {
+          .container {
+            padding: 1rem;
+            max-width: 100vw;
+          }
+          .title {
+            font-size: 1.1rem;
+          }
+          .tab-btn {
+            font-size: 1rem;
+            padding: 0.4rem 0.7rem;
+          }
         }
       `}</style>
     </div>
