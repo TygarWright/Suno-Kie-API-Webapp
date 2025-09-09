@@ -62,7 +62,7 @@ export default function Home() {
         {tabs.map(tab => (
           <button
             key={tab.id}
-            className={\`tab-btn ${tab.id === currentTab ? 'active' : ''}\`}
+            className={`tab-btn ${tab.id === currentTab ? 'active' : ''}`}
             onClick={() => setCurrentTab(tab.id)}
           >
             {tab.label}
