@@ -11,65 +11,28 @@ export default function LyricsGenerator({ apiKey }) {
     setLyrics('');
     try {
       const res = await api.generateLyrics(apiKey, { prompt });
-      if (res.lyrics) {
-        setLyrics(res.lyrics);
-        setStatus('Lyrics generated successfully!');
-      } else {
-        setStatus('Failed to generate lyrics');
-      }
+      setLyrics(res.data.lyrics || 'Lyrics generated.');
+      setStatus('Success!');
     } catch (e) {
-      setStatus('Error: ' + (e.message || 'Unknown error'));
+      setStatus('Error: ' + e.message);
     }
   }
 
   return (
-    <div style={{ marginTop: '2rem', color: '#fff' }}>
-      <label htmlFor="lyricsPrompt">Prompt for lyrics generation:</label>
-      <input
-        id="lyricsPrompt"
-        type="text"
+    <div>
+      <h3>Generate Lyrics</h3>
+      <textarea
+        placeholder="Enter lyrics prompt"
         value={prompt}
-        onChange={(e) => setPrompt(e.target.value)}
-        placeholder="e.g., love ballad about summer"
-        style={{
-          width: '100%',
-          padding: '0.5rem',
-          borderRadius: '8px',
-          margin: '0.5rem 0',
-          border: 'none',
-          outline: 'none',
-          fontSize: '1rem',
-        }}
+        onChange={e => setPrompt(e.target.value)}
+        rows={5}
       />
-      <button
-        onClick={generateLyrics}
-        style={{
-          padding: '0.75rem 1.5rem',
-          borderRadius: '8px',
-          cursor: 'pointer',
-          backgroundColor: '#3b82f6',
-          color: '#fff',
-          border: 'none',
-          fontWeight: 'bold',
-        }}
-        disabled={!prompt.trim()}
-      >
-        Generate Lyrics
+      <button onClick={generateLyrics} disabled={!prompt.trim()}>
+        Generate
       </button>
-      <p style={{ marginTop: '1rem', minHeight: '1.5rem' }}>{status}</p>
+      <p>{status}</p>
       {lyrics && (
-        <pre
-          style={{
-            whiteSpace: 'pre-wrap',
-            marginTop: '1rem',
-            padding: '1rem',
-            backgroundColor: 'rgba(255, 255, 255, 0.1)',
-            borderRadius: '8px',
-            maxHeight: '300px',
-            overflowY: 'auto',
-            fontFamily: 'monospace',
-          }}
-        >
+        <pre style={{ whiteSpace: 'pre-wrap', backgroundColor: '#222', padding: '1rem', borderRadius: '8px' }}>
           {lyrics}
         </pre>
       )}
